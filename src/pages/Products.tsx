@@ -9,7 +9,7 @@ import { Grid, List } from 'lucide-react';
 import { useProducts } from '../hooks/useSupabase';
 import { Product, ProductFilters, CategoryCount } from '../types';
 import { ProductList, ProductFilter } from '../components/product';
-import { Loading, ErrorMessage, Button } from '../components/common';
+import { Loading, ErrorMessage } from '../components/common';
 
 const Products = () => {
   const [searchParams] = useSearchParams();

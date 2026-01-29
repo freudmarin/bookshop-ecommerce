@@ -34,7 +34,7 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { items, total, clearCart } = useCart();
-  const { createOrder, loading: orderLoading, error: orderError } = useOrders();
+  const { createOrder, error: orderError } = useOrders();
   const { checkStockAvailability } = useProducts();
 
   const [formData, setFormData] = useState<CheckoutFormData>({
@@ -50,14 +50,12 @@ const CheckoutForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stockError, setStockError] = useState<string | null>(null);
-  const [loadingProfile, setLoadingProfile] = useState(false);
 
   // Load user profile data if authenticated
   useEffect(() => {
     const loadUserProfile = async () => {
       if (!user) return;
 
-      setLoadingProfile(true);
       try {
         const { data: profile, error } = await supabase
           .from('users')
@@ -83,8 +81,6 @@ const CheckoutForm = () => {
         }
       } catch (err) {
         console.error('Failed to load profile:', err);
-      } finally {
-        setLoadingProfile(false);
       }
     };
 
