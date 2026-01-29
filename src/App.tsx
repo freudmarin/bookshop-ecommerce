@@ -18,6 +18,8 @@ import {
   OrderConfirmationPage,
   TrackOrder,
   AdminOrders,
+  ForgotPassword,
+  ResetPassword,
 } from './pages';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -50,6 +52,8 @@ function App() {
               {/* Auth Pages */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
 
               {/* Protected Routes - Require Authentication */}
               <Route

@@ -6,3 +6,5 @@ export { default as Checkout } from './Checkout';
 export { default as OrderConfirmationPage } from './OrderConfirmationPage';
 export { default as TrackOrder } from './TrackOrder';
 export { default as AdminOrders } from './AdminOrders';
+export { default as ForgotPassword } from './ForgotPassword';
+export { default as ResetPassword } from './ResetPassword';

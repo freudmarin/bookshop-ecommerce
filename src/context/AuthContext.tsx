@@ -19,6 +19,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
+  updatePassword: (newPassword: string) => Promise<{ error: AuthError | null }>;
   updateProfile: (updates: { full_name?: string; phone?: string; default_address?: string; default_city?: string; default_postal_code?: string }) => Promise<{ error: Error | null }>;
 }
 
@@ -159,6 +160,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   /**
+   * Update user password
+   */
+  const updatePassword = useCallback(async (
+    newPassword: string
+  ): Promise<{ error: AuthError | null }> => {
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      return { error };
+    } catch (err) {
+      return { error: err as AuthError };
+    }
+  }, []);
+
+  /**
    * Update user profile information
    */
   const updateProfile = useCallback(async (
@@ -207,6 +225,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signIn,
     signOut,
     resetPassword,
+    updatePassword,
     updateProfile,
   };
 
