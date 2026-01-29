@@ -3,8 +3,8 @@
 -- Initial migration for e-commerce bookshop with authentication
 -- ============================================
 
--- Enable UUID extension for generating unique IDs
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto extension for generating UUIDs (Supabase default)
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- ============================================
 -- USERS TABLE (extends auth.users)
@@ -29,7 +29,7 @@ CREATE INDEX idx_users_id ON users(id);
 -- Stores all book information
 -- ============================================
 CREATE TABLE products (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     isbn VARCHAR(20) UNIQUE,
@@ -68,7 +68,7 @@ CREATE TYPE order_status AS ENUM (
 -- Stores customer orders (supports both authenticated and guest users)
 -- ============================================
 CREATE TABLE orders (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_number VARCHAR(20) UNIQUE NOT NULL,
     user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL, -- Nullable for guest checkout
     customer_name VARCHAR(255) NOT NULL,
@@ -96,8 +96,8 @@ CREATE INDEX idx_orders_created_at ON orders(created_at);
 -- ORDER ITEMS TABLE
 -- Stores individual items within an order
 -- ============================================
-CREATE TABLE order_items (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE order_items (    
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
     quantity INTEGER NOT NULL CHECK (quantity > 0),
@@ -114,7 +114,7 @@ CREATE INDEX idx_order_items_product_id ON order_items(product_id);
 -- Stores user wishlists (authenticated users only)
 -- ============================================
 CREATE TABLE wishlists (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
@@ -130,7 +130,7 @@ CREATE INDEX idx_wishlists_product_id ON wishlists(product_id);
 -- Stores product reviews (authenticated users only)
 -- ============================================
 CREATE TABLE reviews (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
