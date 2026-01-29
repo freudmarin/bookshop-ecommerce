@@ -244,18 +244,6 @@ SQL script to create test users:
 - Server-side data protection via RLS
 - No data leakage between users
 
-## Testing the Authentication
-
-### Test Accounts
-Use these pre-configured accounts:
-```
-Email: test@bookhaven.com
-Password: Test123!
-
-Email: jane@bookhaven.com
-Password: Jane123!
-```
-
 ### Test Scenarios
 1. **Registration**: Create new account → Check profile created
 2. **Login**: Sign in → Check user menu appears
