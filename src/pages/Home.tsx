@@ -223,31 +223,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Newsletter Section */}
-      <section className="py-12 md:py-16 bg-literary-leather text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-80" />
-            <h2 className="font-serif text-3xl font-bold mb-3">
-              Join Our Reading Community
-            </h2>
-            <p className="text-gray-300 mb-6">
-              Subscribe to get updates on new arrivals, exclusive offers, and reading recommendations.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent-400"
-              />
-              <Button variant="secondary" type="submit">
-                Subscribe
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
